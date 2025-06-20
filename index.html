@@ -87,13 +87,10 @@
             height: 500px;
             overflow: hidden;
             display: flex;
-           flex-direction: column; /* Garante que os itens fiquem um embaixo do outro */
+            flex-direction: column; /* Garante que os itens fiquem um embaixo do outro */
             justify-content: center; /* Centraliza verticalmente */
             align-items: center; /* Centraliza horizontalmente */
             text-align: center; /* Garante que o texto dentro dos elementos também esteja centralizado */
-            justify-content: center;
-            align-items: center;
-            text-align: center;
             padding: 2rem;
         }
 
@@ -383,6 +380,97 @@
             transform: scale(1.1);
         }
 
+        /* Chat Fake Section */
+        #fake-chat {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        #fake-chat h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #facc15; /* Yellow */
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff0d;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            padding: 1rem;
+            height: 300px;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background-color: #4b5563; /* Gray */
+            overflow: hidden;
+        }
+
+        .message .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message .text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            margin-right: 0.5rem;
+        }
+
+        .chat-input button {
+            padding: 0.75rem 1.5rem;
+            background-color: #06b6d4;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-input button:hover {
+            background-color: #038ca3;
+        }
+
         /* Responsive Design */
         @media (max-width: 1024px) {
             #hero h1 {
@@ -507,6 +595,20 @@
         </div>
     </section>
 
+    <!-- Chat Fake -->
+    <section id="fake-chat">
+        <h2>Comentários dos Nossos Clientes</h2>
+        <div class="chat-container">
+            <div class="chat-messages">
+                <!-- Mensagens do chat serão adicionadas aqui -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Digite sua mensagem...">
+                <button id="send-button">Enviar</button>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ Section -->
     <section id="faq">
         <h2>Perguntas Frequentes</h2>
@@ -562,5 +664,62 @@
     <a href="#" class="chat-icon">
         <i class="fas fa-comment-dots"></i>
     </a>
+
+    <script>
+        const chatMessages = document.querySelector('.chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendButton = document.getElementById('send-button');
+
+        // Lista de mensagens fakes
+        const fakeMessages = [
+            { avatar: 'https://thispersondoesnotexist.com/', name: 'Carlos', message: 'A pizza chegou super rápido e estava deliciosa!' },
+            { avatar: 'https://thispersondoesnotexist.com/', name: 'Mariana', message: 'O hambúrguer é incrível, recomendo a todos!' },
+            { avatar: 'https://thispersondoesnotexist.com/', name: 'Lucas', message: 'Melhor açaí da cidade, sempre peço aqui!' },
+        ];
+
+        // Função para criar uma mensagem
+        function createMessage(avatar, name, message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message');
+
+            messageElement.innerHTML = `
+                <div class="avatar">
+                    <img src="${avatar}" alt="${name}">
+                </div>
+                <div class="text">
+                    <strong>${name}:</strong> ${message}
+                </div>
+            `;
+
+            return messageElement;
+        }
+
+        // Função para adicionar uma mensagem ao chat
+        function addMessage(message) {
+            const messageElement = createMessage(message.avatar, message.name, message.message);
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll para a mensagem mais recente
+        }
+
+        // Adicionar mensagens fakes ao chat a cada 5 segundos
+        setInterval(() => {
+            const randomMessage = fakeMessages[Math.floor(Math.random() * fakeMessages.length)];
+            addMessage(randomMessage);
+        }, 5000);
+
+        // Enviar mensagem do usuário
+        sendButton.addEventListener('click', () => {
+            const messageText = messageInput.value;
+            if (messageText.trim() !== '') {
+                const userMessage = {
+                    avatar: 'https://thispersondoesnotexist.com/', // Substitua por um avatar padrão
+                    name: 'Você',
+                    message: messageText
+                };
+                addMessage(userMessage);
+                messageInput.value = ''; // Limpar o input
+            }
+        });
+    </script>
 </body>
 </html>
