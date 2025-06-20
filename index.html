@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Açaí Delivery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0b1e;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* Orb Effects */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(50px);
+            z-index: -1;
+        }
+
+        .orb-1 {
+            background: #8b5cf6; /* Purple */
+            width: 200px;
+            height: 200px;
+            top: 10%;
+            left: 10%;
+            opacity: 0.7;
+        }
+
+        .orb-2 {
+            background: #06b6d4; /* Cyan */
+            width: 250px;
+            height: 250px;
+            bottom: 15%;
+            right: 5%;
+            opacity: 0.7;
+        }
+
+        .orb-3 {
+            background: #3b82f6; /* Blue */
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            left: 25%;
+            opacity: 0.7;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background-color: #0a0b1e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        header nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #06b6d4;
+        }
+
+        /* Hero Section */
+        #hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        #hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        #hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #facc15; /* Yellow */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+
+        #hero p {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #dc2626; /* Red */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:hover {
+            background-color: #9f1717; /* Darker Red */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Categories Section */
+        #categories {
+            padding: 2rem;
+        }
+
+        #categories h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #facc15; /* Yellow */
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: #ffffff0d;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .category-card img {
+            width: 100%;
+            border-radius: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #facc15; /* Yellow */
+        }
+
+        .category-card p {
+            font-size: 1rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+
+        .category-card .add-to-cart {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #dc2626; /* Red */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .category-card .add-to-cart:hover {
+            background-color: #9f1717; /* Darker Red */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* FAQ Section */
+        #faq {
+            padding: 2rem;
+        }
+
+        #faq h2 {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #facc15; /* Yellow */
+        }
+
+        .faq-item {
+            background: #ffffff0d;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+            color: #ddd;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0b1e;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            z-index: -1;
+        }
+
+        footer .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #facc15; /* Yellow */
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #06b6d4;
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background: #ffffff0d;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .newsletter h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        .newsletter input[type="email"] {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            margin-right: 0.5rem;
+        }
+
+        .newsletter button {
+            padding: 0.75rem 1.5rem;
+            background-color: #06b6d4;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .newsletter button:hover {
+            background-color: #038ca3;
+        }
+
+        .footer-bottom {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        /* Chat Icon */
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #22c55e; /* Green */
+            color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            z-index: 1000;
+        }
+
+        .chat-icon:hover {
+            background-color: #16a34a; /* Darker Green */
+            transform: scale(1.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+
+            footer .footer-content {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            header nav ul {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            #hero h1 {
+                font-size: 2rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            footer .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #hero {
+                height: 400px;
+            }
+
+            #hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .newsletter input[type="email"] {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .newsletter button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Orb Effects -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Header -->
+    <header>
+        <img src="https://scontent.fsdu12-1.fna.fbcdn.net/v/t39.30808-6/274623735_478546703628260_3085902899825894113_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=3d4c2gB9LzQAX_WbB6o&_nc_ht=scontent.fsdu12-1.fna&oh=00_AfA1p8u-swvXN9f9v5o0HjR_zXkM8i0E1uQv5d9nN8sYjQ&oe=6628E615" alt="Top Açaí Delivery Logo">
+        <nav>
+            <ul>
+                <li><a href="#menu">Cardápio</a></li>
+                <li><a href="#promotions">Promoções</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <video autoplay loop muted>
+            <source src="https://videos.pexels.com/video-files/14584573/14584573-sd_640_360_25fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <h1>🍕🍔 A MELHOR PIZZA E HAMBÚRGUER DA SUA VIDA! 🍔🍕</h1>
+        <p>Peça agora e receba rapidinho!</p>
+        <a href="#categories" class="btn">Ver Cardápio</a>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories">
+        <h2>Nossas Delícias</h2>
+        <div class="categories-grid">
+            <div class="category-card">
+                <img src="https://images.pexels.com/photos/315755/pexels-photo-315755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Pizza">
+                <h3>Pizza de Calabresa</h3>
+                <p>A clássica pizza de calabresa com mussarela e azeitonas.</p>
+                <a href="#" class="add-to-cart">Adicionar ao Carrinho</a>
+            </div>
+            <div class="category-card">
+                <img src="https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Hamburger">
+                <h3>Hambúrguer Artesanal</h3>
+                <p>Delicioso hambúrguer com queijo cheddar, bacon e molho especial.</p>
+                <a href="#" class="add-to-cart">Adicionar ao Carrinho</a>
+            </div>
+            <div class="category-card">
+                <img src="https://images.pexels.com/photos/373883/pexels-photo-373883.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Pizza">
+                <h3>Pizza Marguerita</h3>
+                <p>Pizza marguerita com tomate, mussarela e manjericão fresco.</p>
+                <a href="#" class="add-to-cart">Adicionar ao Carrinho</a>
+            </div>
+            <div class="category-card">
+                <img src="https://images.pexels.com/photos/1251198/pexels-photo-1251198.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Hamburger">
+                <h3>Hambúrguer Vegano</h3>
+                <p>Hambúrguer vegano com grão de bico, legumes e molho especial.</p>
+                <a href="#" class="add-to-cart">Adicionar ao Carrinho</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq">
+        <h2>Perguntas Frequentes</h2>
+        <div class="faq-item">
+            <h3>Qual o tempo de entrega?</h3>
+            <p>O tempo de entrega varia entre 30 e 45 minutos, dependendo da sua localização.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Quais as formas de pagamento?</h3>
+            <p>Aceitamos cartão de crédito, débito, dinheiro e PIX.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Vocês entregam na minha região?</h3>
+            <p>Consulte nossa área de entrega no aplicativo ou entre em contato conosco.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h4>Sobre Nós</h4>
+                <p>O Top Açaí Delivery oferece os melhores açaís, pizzas e hambúrgueres da região, com entrega rápida e qualidade garantida.</p>
+            </div>
+            <div>
+                <h4>Contato</h4>
+                <ul>
+                    <li>Endereço: Rua das Flores, 123</li>
+                    <li>Telefone: (11) 99999-8888</li>
+                    <li>Email: contato@topacaidelivery.com.br</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Links Úteis</h4>
+                <ul>
+                    <li><a href="#">Cardápio</a></li>
+                    <li><a href="#">Promoções</a></li>
+                    <li><a href="#">Área de Entrega</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="newsletter">
+            <h3>Receba Nossas Novidades</h3>
+            <input type="email" placeholder="Seu email">
+            <button>Inscrever-se</button>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Top Açaí Delivery. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Chat Icon -->
+    <a href="#" class="chat-icon">
+        <i class="fas fa-comment-dots"></i>
+    </a>
+</body>
+</html>
